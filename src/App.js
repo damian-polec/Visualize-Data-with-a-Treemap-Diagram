@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import TreeMap from './Components/TreeMap/TreeMap';
 import './App.css';
 
 class App extends Component {
+  state = {
+    data: null,
+    colors: ["gold", "salmon", "pink", "thistle", "mediumorchid", "limegreen", "cornflowerblue", "powderblue", "palevioletred", "plum", "royalblue", "mediumpurple", "darksalmon", "lightskyblue", "lightgreen", "darkgray", "lightsteelblue", "forestgreen"]
+  }
+  
+  componentDidMount () {
+    fetch('https://cdn.rawgit.com/freeCodeCamp/testable-projects-fcc/a80ce8f9/src/data/tree_map/kickstarter-funding-data.json')
+      .then(res => res.json())
+      .then(data => this.setState({data: data}))
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {this.state.data ? <TreeMap data={this.state.data} colors={this.state.colors}/> : null}
       </div>
     );
   }
